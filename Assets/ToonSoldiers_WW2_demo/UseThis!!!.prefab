@@ -253,9 +253,6 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -528,9 +525,6 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -605,9 +599,6 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -973,11 +964,11 @@ GameObject:
   - component: {fileID: 2506739539867572771}
   - component: {fileID: 1735427038332214746}
   - component: {fileID: 3896273077036530139}
-  - component: {fileID: 6036235916646161338}
   - component: {fileID: 2030336804613043758}
-  - component: {fileID: 8522775032323494917}
   - component: {fileID: 849472714527523967}
   - component: {fileID: 2494520995320904714}
+  - component: {fileID: 2096687918603267756}
+  - component: {fileID: 2527402296566269319}
   m_Layer: 0
   m_Name: UseThis!!!
   m_TagString: Untagged
@@ -1007,7 +998,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1735427038332214746
 Animator:
-  serializedVersion: 7
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1021,7 +1012,6 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -1054,38 +1044,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 118
   m_CollisionDetection: 0
---- !u!114 &6036235916646161338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6253404868478365055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15b3cc4ffd95ee34cb1fc4cf92754254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 5310112767969720950}
-  bullet: {fileID: 1186168078131376995, guid: 09acb08ecc0358940ae6077a48586f47, type: 3}
-  animator: {fileID: 1735427038332214746}
-  GunPosisition: {fileID: 8416574810493344218}
-  fov: 60
-  invertCamera: 0
-  cameraCanMove: 1
-  mouseSensitivity: 2
-  maxLookAngle: 50
-  canShootBullet: 0
-  lockCursor: 1
-  aimTarget: {fileID: 2802784922575356336}
-  enableZoom: 1
-  holdToZoom: 0
-  zoomKey: 324
-  zoomFOV: 30
-  zoomStepTime: 5
-  playerCanMove: 1
-  walkSpeed: 5
-  maxVelocityChange: 5
 --- !u!136 &2030336804613043758
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1109,24 +1067,6 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8522775032323494917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6253404868478365055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68bc5e59699714d4a8c7d7b280f888e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gunAnim: {fileID: 1735427038332214746}
-  UpperBody: {fileID: 6115736547868040415}
-  targetPosition: {fileID: 2427467027220655010}
-  isIKActive: 1
-  LeftArm: {fileID: 2435776398218909688}
-  RightArm: {fileID: 4925260180950665847}
 --- !u!114 &849472714527523967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1184,6 +1124,55 @@ MonoBehaviour:
   - {fileID: 8674036351399275992}
   - {fileID: 887299761623054929}
   - {fileID: 8871546963676445685}
+--- !u!114 &2096687918603267756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6253404868478365055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a93994550980d44dbd444a50b63892b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 0}
+  animator: {fileID: 0}
+  GunPosisition: {fileID: 0}
+  fov: 60
+  invertCamera: 0
+  cameraCanMove: 1
+  mouseSensitivity: 2
+  maxLookAngle: 50
+  canShootBullet: 0
+  lockCursor: 1
+  aimTarget: {fileID: 0}
+  enableZoom: 1
+  holdToZoom: 0
+  zoomKey: 324
+  zoomFOV: 30
+  zoomStepTime: 5
+  playerCanMove: 1
+  walkSpeed: 5
+  maxVelocityChange: 5
+--- !u!114 &2527402296566269319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6253404868478365055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8446c62672d31b4fa156bc1d96aa61e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunAnim: {fileID: 0}
+  UpperBody: {fileID: 0}
+  targetPosition: {fileID: 0}
+  isIKActive: 1
+  LeftArm: {fileID: 0}
+  RightArm: {fileID: 0}
 --- !u!1 &6482191747011454129
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,9 +1492,6 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

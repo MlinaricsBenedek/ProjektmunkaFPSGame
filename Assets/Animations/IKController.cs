@@ -24,14 +24,14 @@ public class IKController : MonoBehaviour
             // Set the right hand target position and rotation, if one has been assigned
             if (UpperBody != null)
             {
-                gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand,RightArm.transform.position.y);
+                gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand,0.1f);
                 gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand,RightArm.transform.position.x);
                 
                 gunAnim.SetIKPosition(AvatarIKGoal.RightHand, targetPosition.transform.position);
                 gunAnim.SetIKRotation(AvatarIKGoal.RightHand, RightArm.transform.rotation);
 
                
-                gunAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, LeftArm.transform.position.y);
+                gunAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);
                 gunAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand, LeftArm.transform.rotation.y);
                 // Bal kéz pozícióját és rotációját az illeszkedéshez beállítod
                 gunAnim.SetIKPosition(AvatarIKGoal.LeftHand, targetPosition.transform.position);
