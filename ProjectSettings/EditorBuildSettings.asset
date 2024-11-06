@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MenuScene.unity
+    guid: 719de49f6fe5c444dac03b319d7aebad
+  - enabled: 1
+    path: Assets/ToonSoldiers_WW2_demo/TS_WW2_demo_scene.unity
+    guid: 351d41988a8603c4e97f5952316453ac
   m_configObjects: {}
