@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MenuScene.unity
+    path: Assets/Toon Muzzleflash Pack/Scenes/MenuScene.unity
     guid: 719de49f6fe5c444dac03b319d7aebad
   - enabled: 1
-    path: Assets/ToonSoldiers_WW2_demo/TS_WW2_demo_scene.unity
-    guid: 351d41988a8603c4e97f5952316453ac
+    path: Assets/map/LowPolyFPSLite/Scenes/LowPolyFPS_Lite_Demo.unity
+    guid: 130de191e9bf7de41a659f68e5741ed0
   m_configObjects: {}
