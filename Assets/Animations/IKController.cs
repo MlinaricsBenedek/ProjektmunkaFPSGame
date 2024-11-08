@@ -58,11 +58,11 @@ public class IKController : MonoBehaviour
             gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
             gunAnim.SetLookAtWeight(0);
         }
-        if (targetPosition != null)
-        {
-            gunPos.transform.position = targetPosition.position;
-            gunPos.transform.rotation = targetPosition.rotation;
-        }
+        //if (targetPosition != null)
+        //{
+        //    gunPos.transform.position = targetPosition.position;
+        //    gunPos.transform.rotation = targetPosition.rotation;
+        //}
     }
 
 }

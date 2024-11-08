@@ -148,7 +148,7 @@ public class FPSController : MonoBehaviour
     IEnumerator WaitForShoot()
     {
         yield return new WaitForSeconds(1f);
-        bullet.shootBullet(canShootBullet);
+      //  bullet.shootBullet(canShootBullet);
         canShootBullet = false;
         animator.SetBool("IsShooting", false);
         //Handle the weapon reloading time
