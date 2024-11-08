@@ -7,25 +7,23 @@ public class FPSController : MonoBehaviour
 {
     // Start is called before the first frame update
     private Rigidbody rb;
-
-    public Camera playerCamera;
-    //  public Bullet bullet;
+    public BulletController bullet;
     public Animator animator;
     public Transform GunPosisition;
+    public Camera playerCamera;
+    PhotonView PV;
+    public GameObject aimTarget;
+    public int playerHeal;
     private bool playerCanShoot = true;
     public float fov = 60f;
-    public bool invertCamera = false;
     public bool cameraCanMove = true;
     public float mouseSensitivity = 2f;
     public float maxLookAngle = 50f;
     public bool canShootBullet;
-    // Crosshair
     public bool lockCursor = true;
     // Internal Variables
     private float yaw = 0.0f;
     private float pitch = 0.0f;
-  
-    public GameObject aimTarget;
 
     public bool enableZoom = true;
     public bool holdToZoom = false;
@@ -33,27 +31,18 @@ public class FPSController : MonoBehaviour
     public float zoomFOV = 30f;
     public float zoomStepTime = 5f;
 
-    // Internal Variables
-    private bool isZoomed = false;
     public bool playerCanMove = true;
     public float walkSpeed = 5f;
     public float maxVelocityChange = 5.0f;
-
-    // Internal Variables
-    // private bool isWalking = false;
-    // Internal Variables
-    private Vector3 originalScale;
     float zDinstance = 10f;
-    PhotonView PV;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
         // Set internal variables
         playerCamera.fieldOfView = fov;
-        originalScale = transform.localScale;
     }
-
     void Start()
     {
         if (lockCursor)
@@ -64,6 +53,7 @@ public class FPSController : MonoBehaviour
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
         }
+        playerHeal = 100;
     }
 
     float camRotation;
@@ -110,18 +100,14 @@ public class FPSController : MonoBehaviour
         {
             if (playerCanMove)
             {
-
-                // Calculate how fast we should be moving
                 Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-                // Checks if player is walking and isGrounded
-                // Will allow head bob
                 if (targetVelocity.x != 0 || targetVelocity.z != 0)
                 {
-                    animator.SetBool("IsMoving", false);
+                    animator.SetBool("IsMoving", true);
                 }
                 else
                 {
-                    animator.SetBool("IsMoving", true);
+                    animator.SetBool("IsMoving",false);
                 }
                 targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
                 Vector3 velocity = rb.velocity;
@@ -145,10 +131,24 @@ public class FPSController : MonoBehaviour
             StartCoroutine(WaitForShoot());
         }
     }
+    public void setHeal(int Damage)
+    {
+        if (!PV.IsMine) { return; }
+        if (playerHeal > Damage)
+        {
+            playerHeal -= Damage;
+        }
+        else
+        {
+            playerHeal = 0;
+            //ide kell megimplementálni az animációt. 
+            Destroy(gameObject);
+        }
+    }
     IEnumerator WaitForShoot()
     {
         yield return new WaitForSeconds(1f);
-        //bullet.shootBullet(GunPosisition, canShootBullet);
+        bullet.shootBullet(canShootBullet);
         canShootBullet = false;
         animator.SetBool("IsShooting", false);
         //Handle the weapon reloading time

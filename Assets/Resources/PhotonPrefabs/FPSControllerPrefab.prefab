@@ -341,13 +341,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3321817398619120486}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.86249435, z: -0, w: 0.50606674}
-  m_LocalPosition: {x: -1.292, y: 0.108, z: 0.224}
+  m_LocalRotation: {x: 0, y: -0.86602545, z: 0, w: 0.49999994}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.032910936, y: 0.032910936, z: 0.032910936}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1775911691031636217}
-  m_LocalEulerAnglesHint: {x: 0, y: -119.196, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -120, z: 0}
 --- !u!212 &8162706667214152618
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -855,6 +855,7 @@ MonoBehaviour:
   isIKActive: 1
   LeftArm: {fileID: 6898613621118468995}
   RightArm: {fileID: 3562420931853087124}
+  gunPos: {fileID: 5219607039423419506}
 --- !u!114 &3490102755561984885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,17 +907,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ff33d7230697dd4592700a65fc9e78b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 6284669411339432723}
+  bullet: {fileID: 1425632265395930527, guid: 65af464e8b07e494cbdedfe5a784e694, type: 3}
   animator: {fileID: 7424059935865231394}
   GunPosisition: {fileID: 1775911691031636217}
+  playerCamera: {fileID: 6284669411339432723}
+  aimTarget: {fileID: 8909727268656429221}
+  playerHeal: 0
   fov: 60
-  invertCamera: 0
   cameraCanMove: 1
   mouseSensitivity: 2
   maxLookAngle: 50
   canShootBullet: 0
   lockCursor: 1
-  aimTarget: {fileID: 8909727268656429221}
   enableZoom: 1
   holdToZoom: 0
   zoomKey: 324
@@ -1440,7 +1442,7 @@ Transform:
   m_GameObject: {fileID: 7994423574373523379}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3506384, y: -0.6140462, z: 0.6140462, w: 0.3506384}
-  m_LocalPosition: {x: -0.233, y: 0.114, z: 0.238}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.032910936, y: 0.032910936, z: 0.032910936}
   m_ConstrainProportionsScale: 0
   m_Children: []
