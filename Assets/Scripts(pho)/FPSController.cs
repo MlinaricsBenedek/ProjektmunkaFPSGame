@@ -7,9 +7,9 @@ public class FPSController : MonoBehaviour
 {
     // Start is called before the first frame update
     private Rigidbody rb;
-    public BulletController bullet;
+    public BulletController bulletController;
     public Animator animator;
-    public Transform GunPosisition;
+    //public Transform GunPosisition;
     public Camera playerCamera;
     PhotonView PV;
     public GameObject aimTarget;
@@ -133,6 +133,7 @@ public class FPSController : MonoBehaviour
     }
     public void setHeal(int Damage)
     {
+        Debug.Log("i got hit");
         if (!PV.IsMine) { return; }
         if (playerHeal > Damage)
         {
@@ -148,7 +149,7 @@ public class FPSController : MonoBehaviour
     IEnumerator WaitForShoot()
     {
         yield return new WaitForSeconds(1f);
-      //  bullet.shootBullet(canShootBullet);
+        bulletController.CreatePrefab();
         canShootBullet = false;
         animator.SetBool("IsShooting", false);
         //Handle the weapon reloading time

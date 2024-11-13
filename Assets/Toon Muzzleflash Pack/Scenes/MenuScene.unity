@@ -4207,6 +4207,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960977824}
   m_CullTransparentMesh: 1
+--- !u!1001 &2041573375
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2315078958422413140, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3681759231312569501, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5864637152758369104, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.27569675
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.054
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.443124
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041920641294249528, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280501400196399987, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'Bip001 R UpperArm'\n\tTransform 'Bip001
+        L Hand'\n\tTransform 'Bip001 L UpperArm'\n\tTransform 'Bip001 L Forearm'\n\tTransform
+        'Bip001 R Forearm'\n\tTransform 'Bip001 R UpperArm'\n\tTransform 'Bip001
+        L Hand'\n\tTransform 'Bip001 L UpperArm'\n\tTransform 'Bip001 L Forearm'\n\tTransform
+        'Bip001 R Forearm'\n\tand more ..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141089519310213521, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
+      propertyPath: m_Name
+      value: FPSControllerPrefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
 --- !u!1 &2144171898
 GameObject:
   m_ObjectHideFlags: 0
@@ -4349,3 +4428,4 @@ SceneRoots:
   - {fileID: 636602661}
   - {fileID: 551504724}
   - {fileID: 509773163}
+  - {fileID: 2041573375}
