@@ -755,7 +755,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 118
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &3009125967809865933
 CapsuleCollider:
@@ -856,6 +856,7 @@ MonoBehaviour:
   LeftArm: {fileID: 6898613621118468995}
   RightArm: {fileID: 3562420931853087124}
   gunPos: {fileID: 5219607039423419506}
+  leftHandTarget: {fileID: 0}
 --- !u!114 &3490102755561984885
 MonoBehaviour:
   m_ObjectHideFlags: 0

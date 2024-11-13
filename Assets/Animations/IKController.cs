@@ -12,6 +12,7 @@ public class IKController : MonoBehaviour
     [SerializeField] GameObject LeftArm;
     [SerializeField] GameObject RightArm;
     [SerializeField] GameObject gunPos;
+    [SerializeField] Transform leftHandTarget; // Ãšj cÃ©lpont objektum a bal kÃ©zhez
     private void OnAnimatorIK(int layerIndex)
     {
         if (gunAnim)
@@ -35,7 +36,7 @@ public class IKController : MonoBehaviour
             {
                 gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand,0.3f);
                 gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0.01f);
-                //Vector3 rightHandOffset = new Vector3(1f, 0, 0); // 0.1f érték az X tengelyen való eltolás mértéke
+                //Vector3 rightHandOffset = new Vector3(1f, 0, 0); // 0.1f ï¿½rtï¿½k az X tengelyen valï¿½ eltolï¿½s mï¿½rtï¿½ke
                 //Vector3 rightHandTargetPosition = targetPosition.transform.position + rightHandOffset;
 
                 gunAnim.SetIKPosition(AvatarIKGoal.RightHand, targetPosition.position);
@@ -46,14 +47,17 @@ public class IKController : MonoBehaviour
             {
                 gunAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 3f);
                 gunAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand,0.1f);
-                // Bal kéz pozícióját és rotációját az illeszkedéshez beállítod
-                //Vector3 leftHandOffset = new Vector3(1f, RightArm.transform.position.y, 0); // 0.1f érték az X tengelyen való eltolás mértéke
+
+                // Bal kï¿½z pozï¿½ciï¿½jï¿½t ï¿½s rotï¿½ciï¿½jï¿½t az illeszkedï¿½shez beï¿½llï¿½tod
+                //Vector3 leftHandOffset = new Vector3(1f, RightArm.transform.position.y, 0); // 0.1f ï¿½rtï¿½k az X tengelyen valï¿½ eltolï¿½s mï¿½rtï¿½ke
                 //Vector3 leftHandTargetPosition = targetPosition.transform.position - leftHandOffset;
 
                 gunAnim.SetIKPosition(AvatarIKGoal.LeftHand, targetPosition.position);
                 gunAnim.SetIKRotation(AvatarIKGoal.LeftHand, targetPosition.rotation);
 
             }
+            
+
 
         }
         //if the IK is not active, set the position and rotation of the hand and head back to the original position
