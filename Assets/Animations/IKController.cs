@@ -26,7 +26,7 @@ public class IKController : MonoBehaviour
 //            // Set the right hand target position and rotation, if one has been assigned
 //            if (righHandtargetPosition != null)
 //            {
-//                //ezzel be·llÌtjuk, a reag·l·s mÈrtÈkÈt. 
+//                //ezzel be√°ll√≠tjuk, a reag√°l√°s m√©rt√©k√©t. 
 //                gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
 //                gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1f);
 
@@ -63,8 +63,8 @@ public class IKController : MonoBehaviour
 //        //    Quaternion gunrotate = targetPosition.rotation;
 //        //    gunrotate.y = 0f;
 
-//        //    //x tengelyen adjuk ·t a gunpos-nak.
-//        //    //y tengelyen ne adjuk ·t 
+//        //    //x tengelyen adjuk √°t a gunpos-nak.
+//        //    //y tengelyen ne adjuk √°t 
 //        //    gunPos.transform.rotation = gunrotate;
 
 
