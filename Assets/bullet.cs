@@ -6,8 +6,8 @@ using UnityEngine;
 public class bullet : MonoBehaviour
 {
 
-   // [SerializeField] FPSController fps;
-    public int bulletDamage = 40;
+   [SerializeField] FPSController fps;
+    public float bulletDamage = 40;
     public float bulletSpeed = 20f;
     Rigidbody rb;
 
@@ -24,7 +24,15 @@ public class bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision != null)
-        {
+        { if (collision.gameObject.tag.Equals("Player"))
+            {
+                if (fps == null)
+                {
+                    Debug.Log("az fps null a bullet scriptbe!!!!");
+                }
+                Debug.Log("A golyo utkozott a playerrel, meghívjuk a takedamaget!");
+              fps.setIsGetDamage(true);
+            }
             Destroy(gameObject);
         }
     }

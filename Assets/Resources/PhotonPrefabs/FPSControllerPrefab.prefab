@@ -1699,7 +1699,7 @@ GameObject:
   - component: {fileID: 3057971251108947923}
   m_Layer: 0
   m_Name: FPSControllerPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1919,7 +1919,7 @@ MonoBehaviour:
   animator: {fileID: 8280501400196399987}
   playerCamera: {fileID: 2053726192751146812}
   aimTarget: {fileID: 1103422495969701966}
-  playerHeal: 0
+  currentHeal: 0
   fov: 60
   cameraCanMove: 1
   mouseSensitivity: 2
