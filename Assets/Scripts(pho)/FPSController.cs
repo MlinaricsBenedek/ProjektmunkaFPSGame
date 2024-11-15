@@ -3,17 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FPSController : MonoBehaviour
+public class FPSController : MonoBehaviour,ITakeDamage
 {
     // Start is called before the first frame update
     private Rigidbody rb;
-    public BulletController bullet;
+    public BulletController bulletController;
     public Animator animator;
-    public Transform GunPosisition;
+    //public Transform GunPosisition;
     public Camera playerCamera;
     PhotonView PV;
+    PlayerManager playerManager;
     public GameObject aimTarget;
-    public int playerHeal;
+    public float currentHeal;
     private bool playerCanShoot = true;
     public float fov = 60f;
     public bool cameraCanMove = true;
@@ -35,13 +36,19 @@ public class FPSController : MonoBehaviour
     public float walkSpeed = 5f;
     public float maxVelocityChange = 5.0f;
     float zDinstance = 10f;
-
+    const float maxHeal = 100;
+    bool isMyCharacterTakeDamage = false;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
+        if (PV == null)
+        {
+            Debug.Log("A startba is nulla a PV");
+        }
         // Set internal variables
         playerCamera.fieldOfView = fov;
+        playerManager= PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
     }
     void Start()
     {
@@ -53,7 +60,8 @@ public class FPSController : MonoBehaviour
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
         }
-        playerHeal = 100;
+        currentHeal = maxHeal;
+        Debug.Log("Start befejezodott, PV beallitva.");
     }
 
     float camRotation;
@@ -68,6 +76,7 @@ public class FPSController : MonoBehaviour
     void FixedUpdate()
     {
         Move();
+        CharacterGetDamage();
     }
     private void HandleCamera()
     {
@@ -131,28 +140,57 @@ public class FPSController : MonoBehaviour
             StartCoroutine(WaitForShoot());
         }
     }
-    public void setHeal(int Damage)
-    {
-        if (!PV.IsMine) { return; }
-        if (playerHeal > Damage)
-        {
-            playerHeal -= Damage;
-        }
-        else
-        {
-            playerHeal = 0;
-            //ide kell megimplementálni az animációt. 
-            Destroy(gameObject);
-        }
-    }
+   
     IEnumerator WaitForShoot()
     {
         yield return new WaitForSeconds(1f);
-      //  bullet.shootBullet(canShootBullet);
+        bulletController.CreatePrefab();
         canShootBullet = false;
         animator.SetBool("IsShooting", false);
         //Handle the weapon reloading time
         yield return new WaitForSeconds(3f);
         playerCanShoot = true;
+    }
+    public void setIsGetDamage(bool getDamage) { 
+        isMyCharacterTakeDamage = getDamage;
+    }
+    public void CharacterGetDamage()
+    {
+        if (isMyCharacterTakeDamage)
+        {
+            TakeDamage(30);            
+        }
+        isMyCharacterTakeDamage=false;
+
+    }
+    public void TakeDamage(float damage)
+    {
+        Debug.Log("beleptunk a takedamagebe");
+        PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage);
+    }
+    [PunRPC]
+    void RPC_TakeDamage(float damage)
+    {
+        Debug.Log("beleptunk az RPC_TAKEDAMAGE-be!!!!");
+        if (currentHeal > damage)
+        {
+            currentHeal -= damage;
+        }
+        else
+        {
+            currentHeal = 0;
+            Die();
+        }
+    }
+    void Die() {
+        Debug.Log("the player die");
+        playerManager.Die();
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Bullet"))
+        {
+            TakeDamage(30);
+        }
     }
 }

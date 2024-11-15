@@ -1,88 +1,74 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 public class IKController : MonoBehaviour
-{
-    [SerializeField] Animator gunAnim;
-    [SerializeField] GameObject UpperBody;
-    [SerializeField] Transform targetPosition;
-    public bool isIKActive = true;
-    [SerializeField] GameObject LeftArm;
-    [SerializeField] GameObject RightArm;
-    [SerializeField] GameObject gunPos;
-    public Transform aim;
-    public Vector3 leftHandOffset = new Vector3(10f, 0f, 10f);
-    private void OnAnimatorIK(int layerIndex)
-    {
-        if (gunAnim)
-        {// Set the look target position, if one has been assigned
-            if (targetPosition != null)
-            {
-                gunAnim.SetLookAtWeight(1);
-                gunAnim.SetLookAtPosition(targetPosition.position);
-            }
-            //if (UpperBody != null)
-            //{
-            //    gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0.01f);
-            //    gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, UpperBody.transform.rotation.y);
+{ 
+//{
+//    [SerializeField] Animator gunAnim;
+//    [SerializeField] Transform righHandtargetPosition;
+//    [SerializeField] Transform leftHandtargetRotation;
+//    //public bool isIKActive = true;
+//    //[SerializeField] Transform LeftArm;
+//    //[SerializeField] Transform leftElbow;
+//    //[SerializeField] Transform RightArm;
+//    //[SerializeField] Transform gunPos;
 
-            //    gunAnim.SetIKPosition(AvatarIKGoal.RightHand, targetPosition.transform.position);
-            //    gunAnim.SetIKRotation(AvatarIKGoal.RightHand, UpperBody.transform.rotation);
-            //}
+//    private void OnAnimatorIK(int layerIndex)
+//    {
+//        if (gunAnim)
+//        {// Set the look target position, if one has been assigned
 
-            // Set the right hand target position and rotation, if one has been assigned
-            if (RightArm != null)
-            {
-                gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand,0.3f);
-                gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0.01f);
-                //Vector3 rightHandOffset = new Vector3(1f, 0, 0); // 0.1f érték az X tengelyen való eltolás mértéke
-                //Vector3 rightHandTargetPosition = targetPosition.transform.position + rightHandOffset;
 
-                gunAnim.SetIKPosition(AvatarIKGoal.RightHand, targetPosition.position);
-                gunAnim.SetIKRotation(AvatarIKGoal.RightHand, targetPosition.rotation);
+//            // Set the right hand target position and rotation, if one has been assigned
+//            if (righHandtargetPosition != null)
+//            {
+//                //ezzel beállítjuk, a reagálás mértékét. 
+//                gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
+//                gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1f);
 
-            }
 
-            if (LeftArm != null && aim != null)
-            {
-                gunAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);
-                gunAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1f);
+//                gunAnim.SetIKPosition(AvatarIKGoal.RightHand, righHandtargetPosition.position);
+//                gunAnim.SetIKRotation(AvatarIKGoal.RightHand, righHandtargetPosition.rotation);
+//            }
+//            if (leftHandtargetRotation != null)
+//            {
+//                gunAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);
+//                gunAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1f);
 
-                // Az aim pozíciója, eltolva a leftHandOffset által
-                Vector3 leftHandTargetPosition = aim.position + leftHandOffset;
-            
-                // Bal kéz IK pozíciójának és rotációjának beállítása az aim objektumhoz
-                gunAnim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandTargetPosition);
-                gunAnim.SetIKRotation(AvatarIKGoal.LeftHand, aim.rotation);
-            }
-            /*if (LeftArm != null)
-            {
-                gunAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 3f);
-                gunAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand,0.1f);
-                // Bal kéz pozícióját és rotációját az illeszkedéshez beállítod
-                //Vector3 leftHandOffset = new Vector3(1f, RightArm.transform.position.y, 0); // 0.1f érték az X tengelyen való eltolás mértéke
-                //Vector3 leftHandTargetPosition = targetPosition.transform.position - leftHandOffset;
+//                gunAnim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandtargetRotation.position);
 
-                gunAnim.SetIKPosition(AvatarIKGoal.LeftHand, targetPosition.position);
-                gunAnim.SetIKRotation(AvatarIKGoal.LeftHand, targetPosition.rotation);
+//                gunAnim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandtargetRotation.rotation);
 
-            }*/
+//                //gunAnim.SetIKHintPositionWeight(AvatarIKHint.LeftElbow, 1f);
+//                //gunAnim.SetIKHintPosition(AvatarIKHint.LeftElbow, -(leftHandtargetRotation.position+ RightArm.position+LeftArm.position));
 
-        }
-        //if the IK is not active, set the position and rotation of the hand and head back to the original position
-        else
-        {
-            gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
-            gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
-            gunAnim.SetLookAtWeight(0);
-        }
-        //if (targetPosition != null)
-        //{
-        //    gunPos.transform.position = targetPosition.position;
-        //    gunPos.transform.rotation = targetPosition.rotation;
-        //}
+//            }
+
+//        }
+//        //if the IK is not active, set the position and rotation of the hand and head back to the original position
+//        else
+//        {
+//            gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+//            gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
+//            gunAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0);
+//            gunAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
+//            gunAnim.SetLookAtWeight(0);
+//        }
+//        //if (targetPosition != null)
+//        //{
+//        //    Quaternion gunrotate = targetPosition.rotation;
+//        //    gunrotate.y = 0f;
+
+//        //    //x tengelyen adjuk át a gunpos-nak.
+//        //    //y tengelyen ne adjuk át 
+//        //    gunPos.transform.rotation = gunrotate;
+
+
+//        //    //}
+//        }
+
     }
-
-}

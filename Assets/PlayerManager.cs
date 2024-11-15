@@ -7,6 +7,7 @@ using System.IO;
 public class PlayerManager : MonoBehaviour
 {
     PhotonView Pv;
+    GameObject controller;
     private void Awake()
     {
         Pv = GetComponent<PhotonView>();
@@ -14,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         if (Pv.IsMine)
-        { 
+        {
             CreateController();
         }
     }
@@ -22,6 +23,15 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void CreateController()
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "FPSControllerPrefab"), Vector3.zero, Quaternion.identity);
+        Transform spawnPoint=SpawnManager.instance.GetSpawnPoint();
+       controller= PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "FPSControllerPrefab"), spawnPoint.position,spawnPoint.rotation, 0, new object[] { Pv.ViewID });
     }
+    public void Die()
+    {
+        Debug.Log("Destroy the player");
+        PhotonNetwork.Destroy(controller);
+        CreateController();
+    }
+   
+
 }

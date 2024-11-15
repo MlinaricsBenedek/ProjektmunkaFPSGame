@@ -4,28 +4,14 @@ using UnityEngine;
 using Photon.Pun;
 public class BulletController : MonoBehaviour
 {
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField]Transform gunPosition;
+    [SerializeField] bullet bullet;
+    public void CreatePrefab()
+    {
+        GameObject gm = Instantiate(bulletPrefab, gunPosition.transform.position,gunPosition.transform.rotation);
+        
+    }
 
-    //[SerializeField] GameObject bullet;
-    //[SerializeField] FPSController fps;
-    //[SerializeField] GameObject gunPosition;
-    //public int bulletDamage=40;
-    //public float bulletSpeed = 20f;
-    //public void shootBullet(bool canShoot)
-    //{
-    //    if (canShoot)
-    //    {
-    //        GameObject gm = Instantiate(bullet, gunPosition.transform.position, bullet.transform.rotation);
-    //        Rigidbody rb = gm.GetComponent<Rigidbody>();
-    //        rb.AddForce(gunPosition.transform.forward * bulletSpeed, ForceMode.Impulse);
-    //    }
-    //}
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision != null)
-    //    {
-    //        fps.setHeal(40);
-    //        Destroy(gameObject);
-           
-    //    }
-    //}
+
 }
