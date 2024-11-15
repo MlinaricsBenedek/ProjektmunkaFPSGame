@@ -12,6 +12,8 @@ public class IKController : MonoBehaviour
     [SerializeField] GameObject LeftArm;
     [SerializeField] GameObject RightArm;
     [SerializeField] GameObject gunPos;
+    public Transform aim;
+    public Vector3 leftHandOffset = new Vector3(10f, 0f, 10f);
     private void OnAnimatorIK(int layerIndex)
     {
         if (gunAnim)
@@ -35,25 +37,38 @@ public class IKController : MonoBehaviour
             {
                 gunAnim.SetIKPositionWeight(AvatarIKGoal.RightHand,0.3f);
                 gunAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0.01f);
-                //Vector3 rightHandOffset = new Vector3(1f, 0, 0); // 0.1f ÈrtÈk az X tengelyen valÛ eltol·s mÈrtÈke
+                //Vector3 rightHandOffset = new Vector3(1f, 0, 0); // 0.1f √©rt√©k az X tengelyen val√≥ eltol√°s m√©rt√©ke
                 //Vector3 rightHandTargetPosition = targetPosition.transform.position + rightHandOffset;
 
                 gunAnim.SetIKPosition(AvatarIKGoal.RightHand, targetPosition.position);
                 gunAnim.SetIKRotation(AvatarIKGoal.RightHand, targetPosition.rotation);
 
             }
-            if (LeftArm != null)
+
+            if (LeftArm != null && aim != null)
+            {
+                gunAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);
+                gunAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1f);
+
+                // Az aim poz√≠ci√≥ja, eltolva a leftHandOffset √°ltal
+                Vector3 leftHandTargetPosition = aim.position + leftHandOffset;
+            
+                // Bal k√©z IK poz√≠ci√≥j√°nak √©s rot√°ci√≥j√°nak be√°ll√≠t√°sa az aim objektumhoz
+                gunAnim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandTargetPosition);
+                gunAnim.SetIKRotation(AvatarIKGoal.LeftHand, aim.rotation);
+            }
+            /*if (LeftArm != null)
             {
                 gunAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 3f);
                 gunAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand,0.1f);
-                // Bal kÈz pozÌciÛj·t Ès rot·ciÛj·t az illeszkedÈshez be·llÌtod
-                //Vector3 leftHandOffset = new Vector3(1f, RightArm.transform.position.y, 0); // 0.1f ÈrtÈk az X tengelyen valÛ eltol·s mÈrtÈke
+                // Bal k√©z poz√≠ci√≥j√°t √©s rot√°ci√≥j√°t az illeszked√©shez be√°ll√≠tod
+                //Vector3 leftHandOffset = new Vector3(1f, RightArm.transform.position.y, 0); // 0.1f √©rt√©k az X tengelyen val√≥ eltol√°s m√©rt√©ke
                 //Vector3 leftHandTargetPosition = targetPosition.transform.position - leftHandOffset;
 
                 gunAnim.SetIKPosition(AvatarIKGoal.LeftHand, targetPosition.position);
                 gunAnim.SetIKRotation(AvatarIKGoal.LeftHand, targetPosition.rotation);
 
-            }
+            }*/
 
         }
         //if the IK is not active, set the position and rotation of the hand and head back to the original position
