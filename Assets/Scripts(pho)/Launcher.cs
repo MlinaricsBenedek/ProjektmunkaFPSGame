@@ -8,6 +8,7 @@ using System.Linq;
 using Unity.VisualScripting;
 //using Photon.Pun.Demo.PunBasics;
 //using Launcher;
+using UnityEngine.SceneManagement;
 
 
 
@@ -23,6 +24,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject roomListItemPrefab;
     [SerializeField] GameObject PlayerListItemPrefab;
     [SerializeField] GameObject startGameButton;
+
+    /*[SerializeField] private string sceneName;*/
 
     void Awake()
     {
@@ -132,6 +135,18 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
     }
+
+    /*public void ChangeScene()
+    {
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Debug.LogError("Scene name is not set in the inspector!");
+        }
+    }*/
 }
 
 
