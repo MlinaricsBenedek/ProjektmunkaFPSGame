@@ -14,10 +14,14 @@ public class appManager : MonoBehaviour
     public Button settingsButton;
     public AudioManager audioManager;
 
+    public AudioManager.Music_Enum type;
+
+
 
     private void OnEnable()
     {
         StartCoroutine(FadeCoroutine(Color.black, Color.clear));
+        popup.SetActive(false);
     }
 
     public void Exit()
@@ -39,7 +43,10 @@ public class appManager : MonoBehaviour
     public void SettingsSave()
     {
         audioManager.Save();
-        popup.SetActive(false);
+    }   
+    public void ExitSettings()
+    {
+        audioManager.Load();
     }
 
     public void LoadScene(int _index)

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
@@ -37,6 +38,7 @@ public class AudioManager : MonoBehaviour
     }
 
     public List<sfxData> sfxdata = new List<sfxData>();
+    public List<musicData> musicdata = new List<musicData>();
     public AudioSource sfxSource, musicSource;
 
     private List<AudioSource> sfxList = new List<AudioSource>();
@@ -76,9 +78,25 @@ public class AudioManager : MonoBehaviour
         //var data = sfxdata.Where(item => item.type.Equals(_type)).FirstOrDefault(); 
     }
     
-    public void playMusic()
+    public void playMusic(Music_Enum _type)
     {
+            var audioSource = GetAudioSource(musicList, musicSource);
+            for (int i = 0; i < musicdata.Count; i++)
+            {
+                if (musicdata[i].type.Equals(_type))
+                {
+                    audioSource.clip = musicdata[i].audio;
+                    audioSource.volume = musicdata[i].volume;
+                    audioSource.loop = musicdata[i].loop;
+                    audioSource.Play();
+                    break;
+                }
+            }
+    }
 
+    public void OnSceneLoaded()
+    {
+            musicSource.Stop();
     }
 
     public AudioSource GetAudioSource(List<AudioSource> _list, AudioSource source)
@@ -114,13 +132,11 @@ public class AudioManager : MonoBehaviour
     public void changeMusicVolume(float volume)
     {
         audioMixer.SetFloat("Music_Volume", volume);
-        Save();
     }
 
     public void changeSfxVolume(float volume)
     {
         audioMixer.SetFloat("SFX_Volume", volume);
-        Save();
     }
 
     public void Save()
@@ -139,8 +155,8 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            musicSlider.value = 1;
-            audioMixer.SetFloat("MusicVolume", 1);
+            musicSlider.value = 0.5f;
+            audioMixer.SetFloat("MusicVolume", Mathf.Log10(0.5f) * 20);
         }
 
         if (PlayerPrefs.HasKey("sfxVolume"))
@@ -150,8 +166,8 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            sfxSlider.value = 1;
-            audioMixer.SetFloat("SFX_Volume", 1);
+            sfxSlider.value = 0.5f;
+            audioMixer.SetFloat("SFX_Volume", Mathf.Log10(0.5f) * 20);
         }
     }
 }
