@@ -3,194 +3,203 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FPSController : MonoBehaviour,ITakeDamage
+public class FPSController : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Rigidbody rb;
-    public BulletController bulletController;
-    public Animator animator;
-    //public Transform GunPosisition;
-    public Camera playerCamera;
-    PhotonView PV;
-    PlayerManager playerManager;
-    public GameObject aimTarget;
-    public float currentHeal;
-    private bool playerCanShoot = true;
-    public float fov = 60f;
-    public bool cameraCanMove = true;
-    public float mouseSensitivity = 2f;
-    public float maxLookAngle = 50f;
-    public bool canShootBullet;
-    public bool lockCursor = true;
-    // Internal Variables
-    private float yaw = 0.0f;
-    private float pitch = 0.0f;
+// Start is called before the first frame update
+private Rigidbody rb;
+public BulletController bulletController;
+public Animator animator;
+//public Transform GunPosisition;
+public Camera playerCamera;
+PhotonView PV;
+PlayerManager playerManager;
+public GameObject aimTarget;
+public int currentHeal;
+private bool playerCanShoot = true;
+public float fov = 60f;
+public bool cameraCanMove = true;
+public float mouseSensitivity = 2f;
+public float maxLookAngle = 50f;
+public bool canShootBullet;
+public bool lockCursor = true;
+// Internal Variables
+private float yaw = 0.0f;
+private float pitch = 0.0f;
 
-    public bool enableZoom = true;
-    public bool holdToZoom = false;
-    public KeyCode zoomKey = KeyCode.Mouse1;
-    public float zoomFOV = 30f;
-    public float zoomStepTime = 5f;
+public bool enableZoom = true;
+public bool holdToZoom = false;
+public KeyCode zoomKey = KeyCode.Mouse1;
+public float zoomFOV = 30f;
+public float zoomStepTime = 5f;
 
-    public bool playerCanMove = true;
-    public float walkSpeed = 5f;
-    public float maxVelocityChange = 5.0f;
-    float zDinstance = 10f;
-    const float maxHeal = 100;
-    bool isMyCharacterTakeDamage = false;
-    private void Awake()
+public bool playerCanMove = true;
+public float walkSpeed = 5f;
+public float maxVelocityChange = 5.0f;
+float zDinstance = 10f;
+const int maxHeal = 100;
+bool isMyCharacterTakeDamage = false;
+public HealthBar hpbar;
+private void Awake()
+{
+    hpbar = GetComponentInChildren<HealthBar>();
+    rb = GetComponent<Rigidbody>();
+    PV = GetComponent<PhotonView>();
+    if (PV == null)
     {
-        rb = GetComponent<Rigidbody>();
-        PV = GetComponent<PhotonView>();
-        if (PV == null)
-        {
-            Debug.Log("A startba is nulla a PV");
-        }
-        // Set internal variables
-        playerCamera.fieldOfView = fov;
-        playerManager= PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
+        Debug.Log("A startba is nulla a PV");
     }
-    void Start()
+    // Set internal variables
+    playerCamera.fieldOfView = fov;
+    playerManager= PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
+}
+void Start()
+{
+    if (lockCursor)
     {
-        if (lockCursor)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        if (!PV.IsMine)
-        {
-            Destroy(GetComponentInChildren<Camera>().gameObject);
-        }
-        currentHeal = maxHeal;
-        Debug.Log("Start befejezodott, PV beallitva.");
+        Cursor.lockState = CursorLockMode.Locked;
     }
-
-    float camRotation;
-
-    private void Update()
+    if (!PV.IsMine)
     {
-        if (!PV.IsMine) return;
-        HandleCamera();
-        Shoot();
+        Destroy(GetComponentInChildren<Camera>().gameObject);
     }
+    currentHeal = maxHeal;
+    hpbar.MaxValueSet(maxHeal);
+    Debug.Log("Start befejezodott, PV beallitva.");
+}
 
-    void FixedUpdate()
+float camRotation;
+
+private void Update()
+{
+    if (!PV.IsMine) return;
+    HandleCamera();
+    Shoot();
+}
+
+void FixedUpdate()
+{
+    Move();
+    CharacterGetDamage();
+}
+private void HandleCamera()
+{
+    // Control camera movement
+    if (cameraCanMove)
     {
-        Move();
-        CharacterGetDamage();
+        yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
+
+
+        pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
+
+
+        pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
+
+        transform.localEulerAngles = new Vector3(0, yaw, 0);
+        playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+        Vector3 mouseScreenPosition = Input.mousePosition;
+        mouseScreenPosition.z = zDinstance;
+        Vector3 mouseWorldPosition = playerCamera.ScreenToWorldPoint(mouseScreenPosition);
+
+
+        aimTarget.transform.position = new Vector3(mouseWorldPosition.x, mouseWorldPosition.y, mouseWorldPosition.z);
+        aimTarget.transform.localEulerAngles = playerCamera.transform.localEulerAngles;
     }
-    private void HandleCamera()
+}
+private void Move()
+{
+    if (!PV.IsMine) return;
+    else
     {
-        // Control camera movement
-        if (cameraCanMove)
+        if (playerCanMove)
         {
-            yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
-
-
-            pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
-
-
-            pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
-
-            transform.localEulerAngles = new Vector3(0, yaw, 0);
-            playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
-            Vector3 mouseScreenPosition = Input.mousePosition;
-            mouseScreenPosition.z = zDinstance;
-            Vector3 mouseWorldPosition = playerCamera.ScreenToWorldPoint(mouseScreenPosition);
-
-
-            aimTarget.transform.position = new Vector3(mouseWorldPosition.x, mouseWorldPosition.y, mouseWorldPosition.z);
-            aimTarget.transform.localEulerAngles = playerCamera.transform.localEulerAngles;
-        }
-    }
-    private void Move()
-    {
-        if (!PV.IsMine) return;
-        else
-        {
-            if (playerCanMove)
+            Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            if (targetVelocity.x != 0 || targetVelocity.z != 0)
             {
-                Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-                if (targetVelocity.x != 0 || targetVelocity.z != 0)
-                {
-                    animator.SetBool("IsMoving", true);
-                }
-                else
-                {
-                    animator.SetBool("IsMoving",false);
-                }
-                targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
-                Vector3 velocity = rb.velocity;
-                Vector3 velocityChange = (targetVelocity - velocity);
-                velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-                velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-                velocityChange.y = 0;
-
-                rb.AddForce(velocityChange, ForceMode.VelocityChange);
+                animator.SetBool("IsMoving", true);
             }
-        }
-    }
-    private void Shoot()
-    {
-        if (Input.GetMouseButton(0) && playerCanShoot)
-        {
-            playerCanShoot = false;
+            else
+            {
+                animator.SetBool("IsMoving",false);
+            }
+            targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
+            Vector3 velocity = rb.linearVelocity;
+            Vector3 velocityChange = (targetVelocity - velocity);
+            velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+            velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+            velocityChange.y = 0;
 
-            animator.SetBool("IsShooting", true);
-            canShootBullet = true;
-            StartCoroutine(WaitForShoot());
+            rb.AddForce(velocityChange, ForceMode.VelocityChange);
         }
     }
+}
+private void Shoot()
+{
+    if (Input.GetMouseButton(0) && playerCanShoot)
+    {
+        playerCanShoot = false;
+
+        animator.SetBool("IsShooting", true);
+        canShootBullet = true;
+        StartCoroutine(WaitForShoot());
+    }
+}
    
-    IEnumerator WaitForShoot()
+IEnumerator WaitForShoot()
+{
+    yield return new WaitForSeconds(1f);
+    bulletController.CreatePrefab();
+    canShootBullet = false;
+    animator.SetBool("IsShooting", false);
+    //Handle the weapon reloading time
+    yield return new WaitForSeconds(3f);
+    playerCanShoot = true;
+}
+public void setIsGetDamage(bool getDamage) { 
+    isMyCharacterTakeDamage = getDamage;
+}
+public void CharacterGetDamage()
+{
+    if (isMyCharacterTakeDamage)
     {
-        yield return new WaitForSeconds(1f);
-        bulletController.CreatePrefab();
-        canShootBullet = false;
-        animator.SetBool("IsShooting", false);
-        //Handle the weapon reloading time
-        yield return new WaitForSeconds(3f);
-        playerCanShoot = true;
+        TakeDamage(30);            
     }
-    public void setIsGetDamage(bool getDamage) { 
-        isMyCharacterTakeDamage = getDamage;
-    }
-    public void CharacterGetDamage()
-    {
-        if (isMyCharacterTakeDamage)
-        {
-            TakeDamage(30);            
-        }
-        isMyCharacterTakeDamage=false;
+    isMyCharacterTakeDamage=false;
 
-    }
-    public void TakeDamage(float damage)
+}
+
+public void TakeDamage(float damage)
+{
+    Debug.Log("beleptunk a takedamagebe");
+    PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage);
+}
+
+
+[PunRPC]
+void RPC_TakeDamage(int damage)
+{
+    Debug.Log("beleptunk az RPC_TAKEDAMAGE-be!!!!");
+    if (currentHeal > damage)
     {
-        Debug.Log("beleptunk a takedamagebe");
-        PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage);
+        currentHeal -= damage;
+        hpbar.ValueSet(currentHeal);
     }
-    [PunRPC]
-    void RPC_TakeDamage(float damage)
+    else
     {
-        Debug.Log("beleptunk az RPC_TAKEDAMAGE-be!!!!");
-        if (currentHeal > damage)
-        {
-            currentHeal -= damage;
-        }
-        else
-        {
-            currentHeal = 0;
-            Die();
-        }
+        currentHeal = 0;
+        Die();
     }
-    void Die() {
-        Debug.Log("the player die");
-        playerManager.Die();
-    }
-    private void OnCollisionEnter(Collision collision)
+}
+void Die() {
+    Debug.Log("the player die");
+    playerManager.Die();
+}
+private void OnCollisionEnter(Collision collision)
+{
+    if (collision.gameObject.tag.Equals("Bullet"))
     {
-        if (collision.gameObject.tag.Equals("Bullet"))
-        {
-            TakeDamage(30);
-        }
+        TakeDamage(30);
     }
+
+}
 }

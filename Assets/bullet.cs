@@ -18,7 +18,7 @@ public class bullet : MonoBehaviour
     public void shootBullet()
     {
         rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * bulletSpeed;
+        rb.linearVelocity = transform.forward * bulletSpeed;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -30,7 +30,7 @@ public class bullet : MonoBehaviour
                 {
                     Debug.Log("az fps null a bullet scriptbe!!!!");
                 }
-                Debug.Log("A golyo utkozott a playerrel, meghívjuk a takedamaget!");
+                Debug.Log("A golyo utkozott a playerrel, meghï¿½vjuk a takedamaget!");
               fps.setIsGetDamage(true);
             }
             Destroy(gameObject);
