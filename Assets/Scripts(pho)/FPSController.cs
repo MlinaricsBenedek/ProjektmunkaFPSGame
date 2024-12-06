@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ public Camera playerCamera;
 PhotonView PV;
 PlayerManager playerManager;
 public GameObject aimTarget;
-public int currentHeal;
+
 private bool playerCanShoot = true;
 public float fov = 60f;
 public bool cameraCanMove = true;
@@ -37,9 +38,12 @@ public bool playerCanMove = true;
 public float walkSpeed = 5f;
 public float maxVelocityChange = 5.0f;
 float zDinstance = 10f;
-const int maxHeal = 100;
+
 bool isMyCharacterTakeDamage = false;
 public HealthBar hpbar;
+public int currentHeal;
+const int maxHeal = 5;
+
 private void Awake()
 {
     hpbar = GetComponentInChildren<HealthBar>();
@@ -75,6 +79,9 @@ private void Update()
     if (!PV.IsMine) return;
     HandleCamera();
     Shoot();
+    if(Input.GetKeyDown(KeyCode.Backspace)) {
+        TakeDamage(1);
+    }
 }
 
 void FixedUpdate()
@@ -162,13 +169,13 @@ public void CharacterGetDamage()
 {
     if (isMyCharacterTakeDamage)
     {
-        TakeDamage(30);            
+        TakeDamage(1);            
     }
     isMyCharacterTakeDamage=false;
 
 }
 
-public void TakeDamage(float damage)
+public void TakeDamage(int damage)
 {
     Debug.Log("beleptunk a takedamagebe");
     PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage);
@@ -198,7 +205,7 @@ private void OnCollisionEnter(Collision collision)
 {
     if (collision.gameObject.tag.Equals("Bullet"))
     {
-        TakeDamage(30);
+        TakeDamage(1);
     }
 
 }

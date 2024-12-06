@@ -2035,7 +2035,6 @@ MonoBehaviour:
   animator: {fileID: 8280501400196399987}
   playerCamera: {fileID: 2053726192751146812}
   aimTarget: {fileID: 1103422495969701966}
-  currentHeal: 0
   fov: 60
   cameraCanMove: 1
   mouseSensitivity: 2
@@ -2051,6 +2050,7 @@ MonoBehaviour:
   walkSpeed: 5
   maxVelocityChange: 5
   hpbar: {fileID: 0}
+  currentHeal: 0
 --- !u!1001 &9092576460229598127
 PrefabInstance:
   m_ObjectHideFlags: 0
