@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -30,7 +31,8 @@ public class PlayerManager : MonoBehaviour
     {
         Debug.Log("Destroy the player");
         PhotonNetwork.Destroy(controller);
-        CreateController();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //CreateController();
     }
    
 

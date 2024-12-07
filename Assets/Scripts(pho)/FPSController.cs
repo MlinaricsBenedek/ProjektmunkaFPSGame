@@ -66,6 +66,7 @@ void Start()
     if (!PV.IsMine)
     {
         Destroy(GetComponentInChildren<Camera>().gameObject);
+        Destroy(hpbar.gameObject);
     }
     currentHeal = maxHeal;
     hpbar.MaxValueSet(maxHeal);
