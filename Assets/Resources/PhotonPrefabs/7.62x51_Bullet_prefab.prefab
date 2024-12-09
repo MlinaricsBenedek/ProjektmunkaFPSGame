@@ -62,6 +62,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -149,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fps: {fileID: 3057971251108947923, guid: 06e5696053640f94c8ee3452e277eb94, type: 3}
   bulletDamage: 40
-  bulletSpeed: 10
+  bulletSpeed: 20
 --- !u!96 &-4814435437779124999
 TrailRenderer:
   serializedVersion: 3
@@ -168,6 +171,9 @@ TrailRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
