@@ -32,6 +32,8 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Destroy the player");
         PhotonNetwork.Destroy(controller);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         //CreateController();
     }
    
