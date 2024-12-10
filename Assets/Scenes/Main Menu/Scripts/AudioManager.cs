@@ -144,17 +144,22 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
         PlayerPrefs.SetFloat("sfxVolume", sfxSlider.value);
         PlayerPrefs.Save();
+
+        audioMixer.SetFloat("Music_Volume", musicSlider.value);
+        audioMixer.SetFloat("SFX_Volume", sfxSlider.value);
     }
 
     public void Load()
     {
         if (PlayerPrefs.HasKey("musicVolume"))
         {
+            float musicVolume = PlayerPrefs.GetFloat("musicVolume");
             musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
             audioMixer.SetFloat("Music_Volume", musicSlider.value);
         }
         else
         {
+            float sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
             musicSlider.value = 0.5f;
             audioMixer.SetFloat("MusicVolume", Mathf.Log10(0.5f) * 20);
         }
