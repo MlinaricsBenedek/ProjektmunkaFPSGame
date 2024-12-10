@@ -11,7 +11,7 @@ public class SceneChange : MonoBehaviourPunCallbacks
     {
         targetSceneIndex = _index;
 
-        // Cleanup RoomManager vagy más globális objektumok
+        
         CleanupBeforeSceneChange();
 
         if (PhotonNetwork.IsConnected)
@@ -26,23 +26,23 @@ public class SceneChange : MonoBehaviourPunCallbacks
         }
     }
 
-    // Callback: Akkor hívódik meg, ha a Photon sikeresen leválasztott
+    
     public override void OnDisconnected(Photon.Realtime.DisconnectCause cause)
     {
         Debug.Log($"Photon leválasztva. Ok: {cause}. Jelenet betöltése...");
-        SceneManager.LoadScene(targetSceneIndex); // Jelenet betöltése a leválasztás után
+        SceneManager.LoadScene(targetSceneIndex); 
     }
 
     private void CleanupBeforeSceneChange()
     {
-        // Töröld az összes DontDestroyOnLoad objektumot, ha szükséges
+        
         var roomManager = FindObjectOfType<RoomManager>();
         if (roomManager != null)
         {
             Destroy(roomManager.gameObject);
         }
 
-        // Töröld a Photon által kezelt objektumokat
+        
         var photonViews = FindObjectsOfType<PhotonView>();
         foreach (var view in photonViews)
         {
