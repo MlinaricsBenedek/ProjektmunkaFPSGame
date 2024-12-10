@@ -144,12 +144,16 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
         PlayerPrefs.SetFloat("sfxVolume", sfxSlider.value);
         PlayerPrefs.Save();
+
+        audioMixer.SetFloat("Music_Volume", musicSlider.value);
+        audioMixer.SetFloat("SFX_Volume", sfxSlider.value);
     }
 
     public void Load()
     {
         if (PlayerPrefs.HasKey("musicVolume"))
         {
+            float musicVolume = PlayerPrefs.GetFloat("musicVolume");
             musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
             audioMixer.SetFloat("Music_Volume", musicSlider.value);
         }
@@ -161,6 +165,7 @@ public class AudioManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("sfxVolume"))
         {
+            float sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
             sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
             audioMixer.SetFloat("SFX_Volume", sfxSlider.value);
         }
